@@ -36,7 +36,7 @@ export function Header({ searchQuery, onSearchChange }: HeaderProps) {
         <div className="flex items-center space-x-2">
           <div className="text-right">
             <div className="text-sm font-medium text-foreground">Plugin Documentation</div>
-            <div className="text-xs text-muted-foreground">Version 2023.1</div>
+            <div className="text-xs text-muted-foreground">Version 2025.1.2</div>
           </div>
         </div>
       </div>

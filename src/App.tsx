@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Header } from '@/components/Header'
 import { PanelNavigation } from '@/components/PanelNavigation'
 import { PanelDetail } from '@/components/PanelDetail'
-import { useKV } from '@github/spark/hooks'
 
 export interface Video {
   id: string
