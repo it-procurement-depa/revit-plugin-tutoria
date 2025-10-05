@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
+import { YouTubePlayer } from '@/components/YouTubePlayer'
 import { cn } from '@/lib/utils'
 
 interface PanelDetailProps {
@@ -76,7 +77,7 @@ const panelDetails: Record<string, PanelInfo> = {
     id: 'openings',
     name: 'Openings Tools',
     brief: 'Automate the creation and modification of openings in walls, floors, and ceilings with precision and speed.',
-    youtubeVideoId: 'dQw4w9WgXcQ',
+    youtubeVideoId: 'fZ77VuZboBU',
     description: {
       overview: 'The Openings Tools provide intelligent automation for creating precise openings in building elements. Using advanced algorithms, it ensures accurate placement and sizing while maintaining structural integrity.',
       features: [
@@ -305,32 +306,10 @@ export function PanelDetail({ panelId }: PanelDetailProps) {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="aspect-video bg-muted rounded-lg overflow-hidden relative group">
-            {/* YouTube Embed Placeholder */}
-            <iframe
-              className="w-full h-full"
-              src={`https://www.youtube.com/embed/${panel.youtubeVideoId}?rel=0&modestbranding=1`}
-              title={`${panel.name} Tutorial`}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-          
-          <div className="flex items-center justify-between mt-4">
-            <div className="flex items-center space-x-3">
-              <Badge variant="secondary" className="text-xs">
-                Tutorial Video
-              </Badge>
-              <Badge variant="outline" className="text-xs">
-                HD Quality
-              </Badge>
-            </div>
-            <Button variant="outline" size="sm" className="flex items-center space-x-2">
-              <ArrowSquareOut className="w-4 h-4" />
-              <span>Watch on YouTube</span>
-            </Button>
-          </div>
+          <YouTubePlayer 
+            videoId={panel.youtubeVideoId}
+            title={`${panel.name} Tutorial`}
+          />
         </CardContent>
       </Card>
 
