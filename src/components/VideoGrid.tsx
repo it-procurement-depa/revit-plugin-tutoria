@@ -19,7 +19,7 @@ const sampleVideos: Video[] = [
     description: 'Learn the basics of installing and setting up the One Click Plugin for maximum efficiency in your Revit workflow.',
     thumbnail: '/api/placeholder/320/180',
     videoUrl: '/videos/getting-started.mp4',
-    panel: 'all',
+    panel: 'about',
     tool: 'Setup',
     duration: '5:30',
     screenshots: ['/api/placeholder/800/450', '/api/placeholder/800/450'],
@@ -32,87 +32,121 @@ const sampleVideos: Video[] = [
   },
   {
     id: '2',
-    title: 'Delete Frames Tool',
-    description: 'Efficiently remove multiple frame elements from your model using the automated Delete Frames functionality.',
+    title: 'License Activation Guide',
+    description: 'Step-by-step guide to activate and manage your plugin licenses effectively.',
     thumbnail: '/api/placeholder/320/180',
-    videoUrl: '/videos/delete-frames.mp4',
-    panel: 'architecture',
-    tool: 'Delete Frames',
+    videoUrl: '/videos/license-activation.mp4',
+    panel: 'licenses',
+    tool: 'License Manager',
     duration: '3:45',
     screenshots: ['/api/placeholder/800/450', '/api/placeholder/800/450'],
     steps: [
-      'Select the Delete Frames tool from the Architecture panel',
-      'Choose selection criteria (by type, level, or custom filter)',
-      'Preview elements to be deleted',
-      'Execute the deletion and review results'
+      'Access the License Manager from the main panel',
+      'Enter your license key and user information',
+      'Verify license activation status',
+      'Configure license sharing settings'
     ]
   },
   {
     id: '3',
-    title: 'Wall Framing Automation',
-    description: 'Automatically generate wall framing with precise spacing and member sizing using intelligent algorithms.',
+    title: 'Opening Creation Tools',
+    description: 'Automatically create and modify openings in walls, floors, and ceilings with precision.',
     thumbnail: '/api/placeholder/320/180',
-    videoUrl: '/videos/wall-framing.mp4',
-    panel: 'architecture',
-    tool: 'Wall Framing',
+    videoUrl: '/videos/opening-tools.mp4',
+    panel: 'openings',
+    tool: 'Opening Tools',
     duration: '7:20',
     screenshots: ['/api/placeholder/800/450', '/api/placeholder/800/450'],
     steps: [
-      'Select walls to frame',
-      'Configure framing parameters (spacing, member sizes)',
-      'Set opening and corner conditions',
-      'Generate framing and review placement'
+      'Select elements to create openings in',
+      'Define opening dimensions and placement',
+      'Set opening types and properties',
+      'Generate openings and review placement'
     ]
   },
   {
     id: '4',
-    title: 'Ceiling Tools Overview',
-    description: 'Master the ceiling creation and modification tools for efficient overhead element management.',
+    title: 'Standards Configuration',
+    description: 'Configure project standards and templates for consistent modeling practices.',
     thumbnail: '/api/placeholder/320/180',
-    videoUrl: '/videos/ceiling-tools.mp4',
-    panel: 'architecture',
-    tool: 'Ceiling Tools',
+    videoUrl: '/videos/standards-config.mp4',
+    panel: 'standards',
+    tool: 'Standards Setup',
     duration: '6:15',
     screenshots: ['/api/placeholder/800/450', '/api/placeholder/800/450'],
     steps: [
-      'Access ceiling tools from the main panel',
-      'Define ceiling boundaries and levels',
-      'Apply materials and finish properties',
-      'Handle complex ceiling geometries'
+      'Access standards tools from the main panel',
+      'Load or create standard templates',
+      'Configure naming conventions and parameters',
+      'Apply standards to current project'
     ]
   },
   {
     id: '5',
-    title: 'Structural Steel Connections',
-    description: 'Create parametric steel connections with automated detailing and shop drawing generation.',
+    title: 'Advanced Workflow Step 2',
+    description: 'Master the second phase of the advanced modeling workflow with Step 2 tools.',
     thumbnail: '/api/placeholder/320/180',
-    videoUrl: '/videos/steel-connections.mp4',
-    panel: 'steel',
-    tool: 'Steel Connections',
+    videoUrl: '/videos/step2-workflow.mp4',
+    panel: 'step2',
+    tool: 'Step 2 Workflow',
     duration: '9:10',
     screenshots: ['/api/placeholder/800/450', '/api/placeholder/800/450'],
     steps: [
-      'Select structural members for connection',
-      'Choose connection type and parameters',
-      'Configure bolt patterns and weld details',
-      'Generate 3D connection geometry'
+      'Complete Step 1 prerequisites',
+      'Initialize Step 2 tools and parameters',
+      'Execute automated workflow processes',
+      'Review and validate Step 2 results'
     ]
   },
   {
     id: '6',
-    title: 'Floor Frame Generation',
-    description: 'Automatically generate floor framing systems with joists, beams, and support structures.',
+    title: 'Model Health Validation',
+    description: 'Check and validate your model health with comprehensive diagnostic tools.',
     thumbnail: '/api/placeholder/320/180',
-    videoUrl: '/videos/floor-framing.mp4',
-    panel: 'structure',
-    tool: 'Floor Framing',
+    videoUrl: '/videos/model-health.mp4',
+    panel: 'model-health',
+    tool: 'Health Check',
     duration: '8:30',
     screenshots: ['/api/placeholder/800/450', '/api/placeholder/800/450'],
     steps: [
-      'Define floor boundaries and levels',
-      'Set joist spacing and beam layout',
-      'Configure support conditions',
-      'Generate complete framing system'
+      'Run comprehensive model health scan',
+      'Review diagnostic results and warnings',
+      'Fix identified issues automatically',
+      'Generate health report for documentation'
+    ]
+  },
+  {
+    id: '7',
+    title: 'Utility Tools Overview',
+    description: 'Explore various utility tools for enhanced productivity and workflow optimization.',
+    thumbnail: '/api/placeholder/320/180',
+    videoUrl: '/videos/utilities.mp4',
+    panel: 'utilities',
+    tool: 'Utility Suite',
+    duration: '5:45',
+    screenshots: ['/api/placeholder/800/450', '/api/placeholder/800/450'],
+    steps: [
+      'Access utility tools from the main panel',
+      'Learn about each utility function',
+      'Apply utilities to common tasks',
+      'Optimize workflow with utility combinations'
+    ]
+  },
+  {
+    id: '8',
+    title: 'Upcoming Features Preview',
+    description: 'Get a sneak peek at upcoming features and planned improvements.',
+    thumbnail: '/api/placeholder/320/180',
+    videoUrl: '/videos/upcoming-features.mp4',
+    panel: 'up-next',
+    tool: 'Feature Preview',
+    duration: '4:20',
+    screenshots: ['/api/placeholder/800/450', '/api/placeholder/800/450'],
+    steps: [
+      'Preview upcoming tool enhancements',
+      'Learn about new workflow capabilities',
+      'Understand planned UI improvements',
+      'Provide feedback on development priorities'
     ]
   }
 ]

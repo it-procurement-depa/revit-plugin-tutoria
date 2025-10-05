@@ -1,5 +1,6 @@
 import { MagnifyingGlass } from '@phosphor-icons/react'
 import { Input } from '@/components/ui/input'
+import { DepaLogo } from '@/components/DepaLogo'
 
 interface HeaderProps {
   searchQuery: string
@@ -12,11 +13,9 @@ export function Header({ searchQuery, onSearchChange }: HeaderProps) {
       <div className="flex h-16 items-center justify-between px-6">
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-primary rounded-md flex items-center justify-center shadow-lg">
-              <span className="text-primary-foreground font-bold text-base tracking-tight">depa</span>
-            </div>
+            <DepaLogo className="w-12 h-12 shadow-lg" />
             <div>
-              <h1 className="text-xl font-bold text-foreground tracking-wide">One Click Plugin</h1>
+              <h1 className="text-xl font-bold text-foreground tracking-wide font-audiowide">One Click Plugin</h1>
               <p className="text-xs text-muted-foreground font-medium">Revit Plugin Documentation</p>
             </div>
           </div>

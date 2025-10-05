@@ -1,14 +1,13 @@
 import { useState } from 'react'
 import { 
-  House, 
-  Buildings, 
+  Info, 
+  Certificate, 
   Wrench, 
-  Hammer, 
-  Lightbulb,
-  Palette,
-  Eye,
-  UserFocus,
-  Gear,
+  Ruler, 
+  NumberTwo, 
+  Heart,
+  Toolbox,
+  ArrowRight,
   GridFour
 } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
@@ -28,60 +27,73 @@ const panels: Panel[] = [
     videoCount: 24
   },
   {
-    id: 'architecture',
-    name: 'Architecture',
-    icon: 'House',
-    description: 'Architectural design tools and workflows',
-    videoCount: 8
-  },
-  {
-    id: 'structure',
-    name: 'Structure',
-    icon: 'Buildings',
-    description: 'Structural engineering and framing tools',
-    videoCount: 6
-  },
-  {
-    id: 'steel',
-    name: 'Steel',
-    icon: 'Wrench',
-    description: 'Steel detailing and connection tools',
-    videoCount: 4
-  },
-  {
-    id: 'precast',
-    name: 'Precast',
-    icon: 'Hammer',
-    description: 'Precast concrete elements and connections',
+    id: 'about',
+    name: 'About',
+    icon: 'Info',
+    description: 'About the plugin and overview',
     videoCount: 3
   },
   {
-    id: 'systems',
-    name: 'Systems',
-    icon: 'Lightbulb',
-    description: 'MEP systems and utilities',
+    id: 'licenses',
+    name: 'Licenses Manager',
+    icon: 'Certificate',
+    description: 'License management and activation',
     videoCount: 2
   },
   {
-    id: 'collaborate',
-    name: 'Collaborate',
-    icon: 'UserFocus',
-    description: 'Collaboration and coordination tools',
-    videoCount: 1
+    id: 'openings',
+    name: 'Openings Tools',
+    icon: 'Wrench',
+    description: 'Opening creation and modification tools',
+    videoCount: 5
+  },
+  {
+    id: 'standards',
+    name: 'Standards Tools',
+    icon: 'Ruler',
+    description: 'Standard compliance and setup tools',
+    videoCount: 4
+  },
+  {
+    id: 'step2',
+    name: 'Step 2 Tools',
+    icon: 'NumberTwo',
+    description: 'Advanced workflow step 2 tools',
+    videoCount: 6
+  },
+  {
+    id: 'model-health',
+    name: 'Model Health Tools',
+    icon: 'Heart',
+    description: 'Model validation and health checks',
+    videoCount: 3
+  },
+  {
+    id: 'utilities',
+    name: 'Utilities Tools',
+    icon: 'Toolbox',
+    description: 'General utility and helper tools',
+    videoCount: 4
+  },
+  {
+    id: 'up-next',
+    name: 'Up Next',
+    icon: 'ArrowRight',
+    description: 'Upcoming features and tutorials',
+    videoCount: 2
   }
 ]
 
 const iconMap = {
   GridFour,
-  House,
-  Buildings,
+  Info,
+  Certificate,
   Wrench,
-  Hammer,
-  Lightbulb,
-  Palette,
-  Eye,
-  UserFocus,
-  Gear
+  Ruler,
+  NumberTwo,
+  Heart,
+  Toolbox,
+  ArrowRight
 }
 
 export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigationProps) {

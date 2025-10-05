@@ -64,4 +64,8 @@
     font-family: 'Inter', sans-serif;
     @apply bg-background text-foreground;
   }
+  
+  .font-audiowide {
+    font-family: 'Audiowide', cursive;
+  }
 }
