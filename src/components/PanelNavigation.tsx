@@ -21,66 +21,66 @@ interface PanelNavigationProps {
 const panels: Panel[] = [
   {
     id: 'all',
-    name: 'All Tutorials',
+    name: 'All Documentation',
     icon: 'GridFour',
-    description: 'Browse all available tutorials',
-    videoCount: 24
+    description: 'Browse all available documentation',
+    videoCount: 0
   },
   {
     id: 'about',
     name: 'About',
     icon: 'Info',
-    description: 'About the plugin and overview',
-    videoCount: 3
+    description: 'Plugin overview and introduction',
+    videoCount: 0
   },
   {
     id: 'licenses',
     name: 'Licenses Manager',
     icon: 'Certificate',
     description: 'License management and activation',
-    videoCount: 2
+    videoCount: 0
   },
   {
     id: 'openings',
     name: 'Openings Tools',
     icon: 'Wrench',
     description: 'Opening creation and modification tools',
-    videoCount: 5
+    videoCount: 0
   },
   {
     id: 'standards',
     name: 'Standards Tools',
     icon: 'Ruler',
     description: 'Standard compliance and setup tools',
-    videoCount: 4
+    videoCount: 0
   },
   {
     id: 'step2',
     name: 'Step 2 Tools',
     icon: 'NumberTwo',
     description: 'Advanced workflow step 2 tools',
-    videoCount: 6
+    videoCount: 0
   },
   {
     id: 'model-health',
     name: 'Model Health Tools',
     icon: 'Heart',
     description: 'Model validation and health checks',
-    videoCount: 3
+    videoCount: 0
   },
   {
     id: 'utilities',
     name: 'Utilities Tools',
     icon: 'Toolbox',
     description: 'General utility and helper tools',
-    videoCount: 4
+    videoCount: 0
   },
   {
     id: 'up-next',
     name: 'Up Next',
     icon: 'ArrowRight',
     description: 'Upcoming features and tutorials',
-    videoCount: 2
+    videoCount: 0
   }
 ]
 
@@ -100,7 +100,7 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
   return (
     <aside className="w-80 border-r border-border bg-secondary/50 min-h-[calc(100vh-4rem)]">
       <div className="p-6">
-        <h2 className="text-lg font-semibold text-foreground mb-4">Plugin Panels</h2>
+        <h2 className="text-lg font-semibold text-foreground mb-4">Documentation</h2>
         <div className="space-y-2">
           {panels.map((panel) => {
             const IconComponent = iconMap[panel.icon as keyof typeof iconMap] || GridFour
@@ -132,14 +132,6 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
                       )}>
                         {panel.name}
                       </h3>
-                      <span className={cn(
-                        "text-xs px-2 py-1 rounded-full transition-colors",
-                        isSelected 
-                          ? "bg-primary-foreground/20 text-primary-foreground" 
-                          : "bg-muted text-muted-foreground group-hover:bg-background"
-                      )}>
-                        {panel.videoCount}
-                      </span>
                     </div>
                     <p className={cn(
                       "text-sm mt-1 transition-colors",

@@ -4,8 +4,12 @@ interface DepaLogoProps {
 
 export function DepaLogo({ className }: DepaLogoProps) {
   return (
-    <div className={`bg-primary rounded-md flex items-center justify-center ${className}`}>
-      <span className="text-primary-foreground font-bold text-base tracking-tight">depa</span>
+    <div
+      className={`bg-red-600 flex items-center justify-center px-4 py-2 ${className}`}
+    >
+      <span className="text-white font-bold text-xl tracking-tight">depa</span>
     </div>
   )
 }
+
+

@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { Header } from '@/components/Header'
 import { PanelNavigation } from '@/components/PanelNavigation'
-import { VideoGrid } from '@/components/VideoGrid'
-import { VideoModal } from '@/components/VideoModal'
+import { PanelDetail } from '@/components/PanelDetail'
 import { useKV } from '@github/spark/hooks'
 
 export interface Video {
@@ -30,16 +29,6 @@ export interface Panel {
 function App() {
   const [selectedPanel, setSelectedPanel] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
-  const [watchedVideos, setWatchedVideos] = useKV<string[]>('watched-videos', [])
-
-  const markVideoAsWatched = (videoId: string) => {
-    setWatchedVideos(current => {
-      const currentArray = current || []
-      if (currentArray.includes(videoId)) return currentArray
-      return [...currentArray, videoId]
-    })
-  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -55,23 +44,11 @@ function App() {
         />
         
         <main className="flex-1 p-6">
-          <VideoGrid 
-            selectedPanel={selectedPanel}
-            searchQuery={searchQuery}
-            watchedVideos={watchedVideos || []}
-            onVideoSelect={setSelectedVideo}
+          <PanelDetail 
+            panelId={selectedPanel}
           />
         </main>
       </div>
-
-      {selectedVideo && (
-        <VideoModal 
-          video={selectedVideo}
-          isWatched={(watchedVideos || []).includes(selectedVideo.id)}
-          onClose={() => setSelectedVideo(null)}
-          onMarkWatched={() => markVideoAsWatched(selectedVideo.id)}
-        />
-      )}
     </div>
   )
 }
