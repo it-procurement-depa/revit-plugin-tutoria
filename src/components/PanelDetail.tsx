@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Play, ArrowSquareOut, Book, Video, Target } from '@phosphor-icons/react'
+import { Play, ArrowSquareOut, Book, Video, Target, Wrench, ChatCircle, CheckCircle, Plus } from '@phosphor-icons/react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -23,6 +23,91 @@ interface PanelInfo {
     usage: string
   }
 }
+
+interface UpcomingTool {
+  id: string
+  name: string
+  description: string
+  icon: typeof Wrench
+  category: string
+  status: 'planned' | 'in-development' | 'testing'
+  estimatedRelease: string
+}
+
+const upcomingTools: UpcomingTool[] = [
+  {
+    id: 'wall-fixation',
+    name: 'Wall Fixation Tools',
+    description: 'Create comprehensive fixation systems for walls with automated placement and sizing.',
+    icon: Wrench,
+    category: 'Fixation Systems',
+    status: 'in-development',
+    estimatedRelease: 'Q2 2024'
+  },
+  {
+    id: 'ceiling-fixation',
+    name: 'Ceiling Fixation Tools',
+    description: 'Complete fixation system for standard ceilings with intelligent anchor placement.',
+    icon: Wrench,
+    category: 'Fixation Systems',
+    status: 'planned',
+    estimatedRelease: 'Q3 2024'
+  },
+  {
+    id: 'ceiling-curved-fixation',
+    name: 'Ceiling Curved Fixation Tools',
+    description: 'Specialized tools for creating fixation systems on curved ceiling surfaces.',
+    icon: Wrench,
+    category: 'Fixation Systems',
+    status: 'planned',
+    estimatedRelease: 'Q3 2024'
+  },
+  {
+    id: 'floor-fixation',
+    name: 'Floor Fixation Tools',
+    description: 'Comprehensive floor fixation system with support for various flooring types.',
+    icon: Wrench,
+    category: 'Fixation Systems',
+    status: 'planned',
+    estimatedRelease: 'Q4 2024'
+  },
+  {
+    id: 'parts-tools',
+    name: 'Parts Tools',
+    description: 'Advanced parts creation with automatic grooves for tiles and enhanced detailing.',
+    icon: Plus,
+    category: 'Modeling Tools',
+    status: 'testing',
+    estimatedRelease: 'Q1 2024'
+  },
+  {
+    id: 'shop-drawings',
+    name: 'Shop Drawings',
+    description: 'Automated shop drawing generation with intelligent dimensions and tags.',
+    icon: Book,
+    category: 'Documentation',
+    status: 'in-development',
+    estimatedRelease: 'Q2 2024'
+  },
+  {
+    id: 'depa-chatbot',
+    name: 'Depa Chat Bot Tool',
+    description: 'ChatGPT integration directly inside Revit for intelligent assistance and guidance.',
+    icon: ChatCircle,
+    category: 'AI Assistant',
+    status: 'planned',
+    estimatedRelease: 'Q3 2024'
+  },
+  {
+    id: 'qa-qc',
+    name: 'QA/QC Tools',
+    description: 'Advanced quality assurance and control tools for comprehensive model validation.',
+    icon: CheckCircle,
+    category: 'Quality Control',
+    status: 'in-development',
+    estimatedRelease: 'Q2 2024'
+  }
+]
 
 const panelDetails: Record<string, PanelInfo> = {
   about: {
@@ -196,25 +281,25 @@ const panelDetails: Record<string, PanelInfo> = {
   'up-next': {
     id: 'up-next',
     name: 'Up Next',
-    brief: 'Stay informed about upcoming features, improvements, and new tools planned for future releases.',
+    brief: 'Discover the exciting new tools and features coming to the One Click Plugin in future releases.',
     youtubeVideoId: 'dQw4w9WgXcQ',
     description: {
-      overview: 'Up Next provides transparency into our development roadmap, showcasing planned features, improvements, and new capabilities coming to the One Click Plugin.',
+      overview: 'Our development roadmap is packed with innovative tools designed to further streamline your Revit workflow. From advanced fixation systems to AI-powered assistance, these upcoming features will revolutionize how you work with building models.',
       features: [
-        'Feature roadmap visualization',
-        'Release timeline information',
-        'Community feedback integration',
-        'Beta testing opportunities',
-        'Development progress updates'
+        'Wall Fixation Tools - Complete fixation system for walls',
+        'Ceiling Fixation Tools - Full fixation system for standard ceilings',
+        'Ceiling Curved Fixation Tools - Specialized tools for curved ceiling fixation',
+        'Floor Fixation Tools - Comprehensive floor fixation system',
+        'Parts Tools - Advanced tools with grooves for tiles'
       ],
       benefits: [
-        'Plan for future capabilities',
-        'Influence development priorities',
-        'Early access to new features',
-        'Stay ahead of workflow trends',
-        'Maximize plugin investment'
+        'Comprehensive fixation solutions for all building elements',
+        'Automated shop drawings with dimensions and tags',
+        'AI-powered ChatGPT integration within Revit',
+        'Advanced quality assurance and control tools',
+        'Enhanced productivity across all project phases'
       ],
-      usage: 'Perfect for forward-thinking teams and individuals who want to stay informed about plugin evolution and plan their workflows around upcoming capabilities.'
+      usage: 'These upcoming tools will serve all aspects of your workflow, from structural fixation systems to AI-assisted design validation and automated documentation generation.'
     }
   }
 }
@@ -271,6 +356,119 @@ export function PanelDetail({ panelId }: PanelDetailProps) {
           <h3 className="text-lg font-medium text-foreground mb-2">Panel not found</h3>
           <p className="text-muted-foreground">The requested panel documentation is not available.</p>
         </div>
+      </div>
+    )
+  }
+
+  // Special rendering for Up Next panel
+  if (panelId === 'up-next') {
+    return (
+      <div className="max-w-6xl mx-auto">
+        {/* Header Section */}
+        <div className="mb-8">
+          <div className="flex items-center space-x-3 mb-4">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Book className="w-6 h-6 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold text-foreground">{panel.name}</h1>
+              <p className="text-muted-foreground">Upcoming Features & Tools</p>
+            </div>
+          </div>
+          
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            {panel.brief}
+          </p>
+        </div>
+
+        {/* Overview Card */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Target className="w-5 h-5 text-primary" />
+              <span>Development Roadmap</span>
+            </CardTitle>
+            <CardDescription>
+              Our commitment to continuous innovation and workflow enhancement
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              {panel.description.overview}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <Badge variant="secondary">8+ New Tools</Badge>
+              <Badge variant="outline">AI Integration</Badge>
+              <Badge variant="outline">Quality Control</Badge>
+              <Badge variant="outline">Automation</Badge>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Upcoming Tools Grid */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-foreground mb-6">Coming Soon</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {upcomingTools.map((tool) => {
+              const IconComponent = tool.icon
+              const statusColors = {
+                'planned': 'bg-blue-500/10 text-blue-600 border-blue-200',
+                'in-development': 'bg-yellow-500/10 text-yellow-600 border-yellow-200',
+                'testing': 'bg-green-500/10 text-green-600 border-green-200'
+              }
+              
+              return (
+                <Card key={tool.id} className="hover:shadow-lg transition-all duration-200 relative">
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="p-2 bg-primary/10 rounded-lg">
+                          <IconComponent className="w-5 h-5 text-primary" />
+                        </div>
+                        <div>
+                          <CardTitle className="text-lg leading-tight">{tool.name}</CardTitle>
+                          <Badge variant="outline" className="text-xs mt-1">
+                            {tool.category}
+                          </Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-sm leading-relaxed mb-4">
+                      {tool.description}
+                    </CardDescription>
+                    <div className="flex items-center justify-between">
+                      <Badge 
+                        variant="outline" 
+                        className={`text-xs ${statusColors[tool.status]}`}
+                      >
+                        {tool.status.replace('-', ' ').toUpperCase()}
+                      </Badge>
+                      <span className="text-xs text-muted-foreground">
+                        {tool.estimatedRelease}
+                      </span>
+                    </div>
+                  </CardContent>
+                </Card>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* More Coming Card */}
+        <Card className="bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20">
+          <CardContent className="pt-6">
+            <div className="text-center">
+              <Plus className="w-8 h-8 text-primary mx-auto mb-3" />
+              <h3 className="text-xl font-semibold text-foreground mb-2">Much More...</h3>
+              <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                We're constantly innovating and developing new tools based on user feedback and industry needs. 
+                Stay tuned for even more exciting features that will continue to revolutionize your Revit workflow.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     )
   }
