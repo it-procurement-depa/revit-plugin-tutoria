@@ -11,13 +11,13 @@ export function Header({ searchQuery, onSearchChange }: HeaderProps) {
     <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
       <div className="flex h-16 items-center justify-between px-6">
         <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">R</span>
+          <div className="flex items-center space-x-3">
+            <div className="w-12 h-12 bg-primary rounded-md flex items-center justify-center shadow-lg">
+              <span className="text-primary-foreground font-bold text-base tracking-tight">depa</span>
             </div>
             <div>
-              <h1 className="text-lg font-bold text-foreground">Revit Plugin Docs</h1>
-              <p className="text-xs text-muted-foreground">One Click Plugin Tutorials</p>
+              <h1 className="text-xl font-bold text-foreground tracking-wide">One Click Plugin</h1>
+              <p className="text-xs text-muted-foreground font-medium">Revit Plugin Documentation</p>
             </div>
           </div>
         </div>
