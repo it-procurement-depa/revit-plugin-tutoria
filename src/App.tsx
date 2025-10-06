@@ -30,7 +30,7 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('')
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background text-foreground">
       <Header 
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
