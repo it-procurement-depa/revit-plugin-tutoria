@@ -11,7 +11,8 @@ import {
   Wrench,
   NumberTwo,
   CaretLeft,
-  CaretRight
+  CaretRight,
+  BookOpen
 } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { Panel } from '@/App'
@@ -168,10 +169,18 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
 
       <div className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
         <div className="p-4 space-y-2">
-          <div className={cn("mb-6", isCollapsed && "hidden")}>
-            <h2 className="text-lg font-semibold text-foreground mb-1">Documentation</h2>
-            <p className="text-xs text-muted-foreground">Navigate through plugin panels</p>
-          </div>
+          {isCollapsed && (
+            <div className="mb-6 flex justify-center" title="Documentation">
+              <BookOpen className="w-6 h-6 text-primary" />
+            </div>
+          )}
+          
+          {!isCollapsed && (
+            <div className="mb-6">
+              <h2 className="text-lg font-semibold text-foreground mb-1">Documentation</h2>
+              <p className="text-xs text-muted-foreground">Navigate through plugin panels</p>
+            </div>
+          )}
 
           {panels.map((panel) => {
             const isSelected = selectedPanel === panel.id

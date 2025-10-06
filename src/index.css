@@ -14,19 +14,19 @@
   --card-foreground: oklch(0.98 0 0);
   --popover: oklch(0.12 0 0);
   --popover-foreground: oklch(0.98 0 0);
-  --primary: oklch(0.92 0.025 15);
+  --primary: oklch(0.93 0.04 25);
   --primary-foreground: oklch(0.08 0 0);
   --secondary: oklch(0.15 0 0);
   --secondary-foreground: oklch(0.98 0 0);
   --muted: oklch(0.15 0 0);
   --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.92 0.025 15);
+  --accent: oklch(0.93 0.04 25);
   --accent-foreground: oklch(0.08 0 0);
   --destructive: oklch(0.62 0.25 27);
   --destructive-foreground: oklch(0.98 0 0);
   --border: oklch(0.20 0 0);
   --input: oklch(0.15 0 0);
-  --ring: oklch(0.92 0.025 15);
+  --ring: oklch(0.93 0.04 25);
   --radius: 0.5rem;
 }
 

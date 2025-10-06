@@ -1,4 +1,4 @@
-import { MagnifyingGlass, Video } from '@phosphor-icons/react'
+import { MagnifyingGlass, Video, FileText } from '@phosphor-icons/react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { DepaLogo } from '@/components/DepaLogo'
@@ -44,14 +44,10 @@ export function Header({ searchQuery, onSearchChange, showVideoGrid = false, onT
               onClick={onToggleView}
               className="flex items-center space-x-2"
             >
-              <Video className="w-4 h-4" />
+              {showVideoGrid ? <FileText className="w-4 h-4" /> : <Video className="w-4 h-4" />}
               <span>{showVideoGrid ? 'Documentation' : 'Tutorials'}</span>
             </Button>
           )}
-          <div className="text-right">
-            <div className="text-sm font-medium text-foreground">Plugin Documentation</div>
-            <div className="text-xs text-muted-foreground">Version 2025.1.2</div>
-          </div>
         </div>
       </div>
     </header>
