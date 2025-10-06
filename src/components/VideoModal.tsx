@@ -1,12 +1,151 @@
 import { useState } from 'react'
 import { X, Play, CheckCircle, ArrowLeft, ArrowRight } from '@phosphor-icons/react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
 import { Card, CardContent } from '@/components/ui/card'
-import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Video } from '@/App'
+import { cn } from '@/lib/utils'
+
+// Video data (should ideally be in a shared data file)
+const allVideos: Video[] = [
+  {
+    id: '1',
+    title: 'Getting Started with One Click Plugin',
+    description: 'Learn the basics of installing and setting up the One Click Plugin for maximum efficiency in your Revit workflow.',
+    thumbnail: '/api/placeholder/320/180',
+    videoUrl: '/videos/getting-started.mp4',
+    panel: 'about',
+    tool: 'Setup',
+    duration: '5:30',
+    screenshots: ['/api/placeholder/800/450', '/api/placeholder/800/450'],
+    steps: [
+      'Download the plugin from the official repository',
+      'Install using the Revit Add-ins manager',
+      'Configure your license and preferences',
+      'Verify installation with a test project'
+    ]
+  },
+  {
+    id: '2',
+    title: 'License Activation Guide',
+    description: 'Step-by-step guide to activate and manage your plugin licenses effectively.',
+    thumbnail: '/api/placeholder/320/180',
+    videoUrl: '/videos/license-activation.mp4',
+    panel: 'licenses',
+    tool: 'License Manager',
+    duration: '3:45',
+    screenshots: ['/api/placeholder/800/450', '/api/placeholder/800/450'],
+    steps: [
+      'Access the License Manager from the main panel',
+      'Enter your license key and user information',
+      'Verify license activation status',
+      'Configure license sharing settings'
+    ]
+  },
+  {
+    id: '3',
+    title: 'Opening Creation Tools',
+    description: 'Automatically create and modify openings in walls, floors, and ceilings with precision.',
+    thumbnail: '/api/placeholder/320/180',
+    videoUrl: '/videos/opening-tools.mp4',
+    panel: 'openings',
+    tool: 'Opening Tools',
+    duration: '7:20',
+    screenshots: ['/api/placeholder/800/450', '/api/placeholder/800/450'],
+    steps: [
+      'Select elements to create openings in',
+      'Define opening dimensions and placement',
+      'Set opening types and properties',
+      'Generate openings and review placement'
+    ]
+  },
+  {
+    id: '4',
+    title: 'Standards Configuration',
+    description: 'Configure project standards and templates for consistent modeling practices.',
+    thumbnail: '/api/placeholder/320/180',
+    videoUrl: '/videos/standards-config.mp4',
+    panel: 'standards',
+    tool: 'Standards Setup',
+    duration: '6:15',
+    screenshots: ['/api/placeholder/800/450', '/api/placeholder/800/450'],
+    steps: [
+      'Access standards tools from the main panel',
+      'Load or create standard templates',
+      'Configure naming conventions and parameters',
+      'Apply standards to current project'
+    ]
+  },
+  {
+    id: '5',
+    title: 'Advanced Workflow Step 2',
+    description: 'Master the second phase of the advanced modeling workflow with Step 2 tools.',
+    thumbnail: '/api/placeholder/320/180',
+    videoUrl: '/videos/step2-workflow.mp4',
+    panel: 'step2',
+    tool: 'Step 2 Workflow',
+    duration: '9:10',
+    screenshots: ['/api/placeholder/800/450', '/api/placeholder/800/450'],
+    steps: [
+      'Complete Step 1 prerequisites',
+      'Initialize Step 2 tools and parameters',
+      'Execute automated workflow processes',
+      'Review and validate Step 2 results'
+    ]
+  },
+  {
+    id: '6',
+    title: 'Model Health Validation',
+    description: 'Check and validate your model health with comprehensive diagnostic tools.',
+    thumbnail: '/api/placeholder/320/180',
+    videoUrl: '/videos/model-health.mp4',
+    panel: 'model-health',
+    tool: 'Health Check',
+    duration: '8:30',
+    screenshots: ['/api/placeholder/800/450', '/api/placeholder/800/450'],
+    steps: [
+      'Run comprehensive model health scan',
+      'Review diagnostic results and warnings',
+      'Fix identified issues automatically',
+      'Generate health report for documentation'
+    ]
+  },
+  {
+    id: '7',
+    title: 'Utility Tools Overview',
+    description: 'Explore various utility tools for enhanced productivity and workflow optimization.',
+    thumbnail: '/api/placeholder/320/180',
+    videoUrl: '/videos/utilities.mp4',
+    panel: 'utilities',
+    tool: 'Utility Suite',
+    duration: '5:45',
+    screenshots: ['/api/placeholder/800/450', '/api/placeholder/800/450'],
+    steps: [
+      'Access utility tools from the main panel',
+      'Learn about each utility function',
+      'Apply utilities to common tasks',
+      'Optimize workflow with utility combinations'
+    ]
+  },
+  {
+    id: '8',
+    title: 'Upcoming Features Preview',
+    description: 'Get a sneak peek at upcoming features and planned improvements.',
+    thumbnail: '/api/placeholder/320/180',
+    videoUrl: '/videos/upcoming-features.mp4',
+    panel: 'up-next',
+    tool: 'Feature Preview',
+    duration: '4:20',
+    screenshots: ['/api/placeholder/800/450', '/api/placeholder/800/450'],
+    steps: [
+      'Preview upcoming tool enhancements',
+      'Learn about new workflow capabilities',
+      'Understand planned UI improvements',
+      'Provide feedback on development priorities'
+    ]
+  }
+]
 
 interface VideoModalProps {
   video: Video | null
@@ -14,17 +153,15 @@ interface VideoModalProps {
   onClose: () => void
   onMarkWatched?: (videoId: string) => void
   isWatched?: boolean
-  allVideos?: Video[]
   onNavigate?: (video: Video) => void
 }
 
 export function VideoModal({ 
   video, 
-  isOpen, 
+  isOpen,
   onClose, 
-  onMarkWatched, 
+  onMarkWatched,
   isWatched = false,
-  allVideos = [],
   onNavigate
 }: VideoModalProps) {
   const [currentStep, setCurrentStep] = useState(0)
@@ -85,8 +222,8 @@ export function VideoModal({
                   <Play className="w-8 h-8" weight="fill" />
                 </div>
               </div>
-              <div className="absolute bottom-4 right-4 bg-black/70 text-white text-sm px-3 py-1 rounded flex items-center space-x-2">
-                <span>{video.duration}</span>
+              <div className="absolute bottom-4 right-4 bg-black/70 text-white text-sm px-3 py-1 rounded">
+                {video.duration}
               </div>
             </div>
 
@@ -96,7 +233,7 @@ export function VideoModal({
               </p>
               {onMarkWatched && (
                 <Button
-                  variant={isWatched ? "secondary" : "default"}
+                  variant={isWatched ? "default" : "outline"}
                   size="sm"
                   onClick={() => onMarkWatched(video.id)}
                   className="ml-4"
@@ -114,11 +251,9 @@ export function VideoModal({
             </div>
           </div>
 
-          <Separator />
-
-          {/* Steps Section */}
+          {/* Tutorial Steps Section */}
           {video.steps && video.steps.length > 0 && (
-            <div>
+            <div className="space-y-4">
               <h3 className="font-semibold text-foreground mb-4">Tutorial Steps</h3>
               <div className="space-y-3">
                 {video.steps.map((step, index) => (
@@ -126,7 +261,7 @@ export function VideoModal({
                     key={index}
                     className={cn(
                       "flex items-start space-x-3 p-3 rounded-lg transition-colors cursor-pointer",
-                      currentStep === index 
+                      currentStep === index
                         ? "bg-primary/10 border border-primary/20" 
                         : "bg-muted/50 hover:bg-muted"
                     )}
@@ -156,7 +291,7 @@ export function VideoModal({
 
           {/* Screenshots Section */}
           {video.screenshots && video.screenshots.length > 0 && (
-            <div>
+            <div className="space-y-4">
               <h3 className="font-semibold text-foreground mb-4">Screenshots</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {video.screenshots.map((screenshot, index) => (
@@ -173,8 +308,6 @@ export function VideoModal({
               </div>
             </div>
           )}
-
-          <Separator />
 
           {/* Navigation Section */}
           {(previousVideo || nextVideo) && (
