@@ -166,7 +166,6 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
           <CaretLeft className="w-4 h-4 text-muted-foreground" />
         )}
       </button>
-
       <div className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
         <div className="p-4 space-y-2">
           {isCollapsed && (
@@ -198,7 +197,7 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
                   title={isCollapsed ? panel.name : undefined}
                 >
                   {isCollapsed ? (
-                    <div className="p-3 flex items-center justify-center">
+                    <div className="p-3 flex items-center justify-center text-4xl">
                       <IconComponent 
                         className={cn(
                           "w-5 h-5 transition-colors",
@@ -236,11 +235,10 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
                   )}
                 </button>
               </div>
-            )
+            );
           })}
         </div>
       </div>
-
       {/* Resize Handle */}
       {!isCollapsed && (
         <div
@@ -252,5 +250,5 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
         />
       )}
     </aside>
-  )
+  );
 }
