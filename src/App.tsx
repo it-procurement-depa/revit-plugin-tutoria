@@ -36,13 +36,13 @@ function App() {
         onSearchChange={setSearchQuery}
       />
       
-      <div className="flex">
+      <div className="flex overflow-hidden">
         <PanelNavigation 
           selectedPanel={selectedPanel}
           onPanelSelect={setSelectedPanel}
         />
         
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-6 overflow-y-auto">
           <PanelDetail 
             panelId={selectedPanel}
             onPanelSelect={setSelectedPanel}

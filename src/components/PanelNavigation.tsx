@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState, useRef, useCallback } from 'react'
 import { 
   Info, 
   Certificate, 
@@ -8,7 +8,8 @@ import {
   Heart,
   Toolbox,
   ArrowRight,
-  GridFour
+  GridFour,
+  DotsSixVertical
 } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { Panel } from '@/App'
@@ -97,55 +98,152 @@ const iconMap = {
 }
 
 export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigationProps) {
+  const [width, setWidth] = useState(320) // Default width of 320px (w-80)
+  const [isResizing, setIsResizing] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(false)
+  const sidebarRef = useRef<HTMLDivElement>(null)
+
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    setIsResizing(true)
+    e.preventDefault()
+  }, [])
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!isResizing) return
+    
+    const newWidth = e.clientX
+    const minWidth = 250
+    const maxWidth = 600
+    
+    if (newWidth >= minWidth && newWidth <= maxWidth) {
+      setWidth(newWidth)
+    }
+  }, [isResizing])
+
+  const handleMouseUp = useCallback(() => {
+    setIsResizing(false)
+  }, [])
+
+  // Add global mouse move and mouse up listeners
+  React.useEffect(() => {
+    if (isResizing) {
+      document.addEventListener('mousemove', handleMouseMove)
+      document.addEventListener('mouseup', handleMouseUp)
+      document.body.style.cursor = 'col-resize'
+      document.body.style.userSelect = 'none'
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseup', handleMouseUp)
+      document.body.style.cursor = ''
+      document.body.style.userSelect = ''
+    }
+  }, [isResizing, handleMouseMove, handleMouseUp])
+
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed)
+  }
+
+  const actualWidth = isCollapsed ? 60 : width
+
   return (
-    <aside className="w-80 border-r border-border bg-secondary/50 min-h-[calc(100vh-4rem)]">
-      <div className="p-6">
-        <h2 className="text-lg font-semibold text-foreground mb-4">Documentation</h2>
-        <div className="space-y-2">
-          {panels.map((panel) => {
-            const IconComponent = iconMap[panel.icon as keyof typeof iconMap] || GridFour
-            const isSelected = selectedPanel === panel.id
-            
-            return (
-              <button
-                key={panel.id}
-                onClick={() => onPanelSelect(panel.id)}
-                className={cn(
-                  "w-full text-left p-4 rounded-lg transition-all duration-200 group",
-                  isSelected 
-                    ? "bg-primary text-primary-foreground shadow-sm" 
-                    : "hover:bg-secondary text-foreground hover:shadow-sm"
-                )}
-              >
-                <div className="flex items-start space-x-3">
-                  <IconComponent 
-                    className={cn(
-                      "w-5 h-5 mt-0.5 transition-colors",
-                      isSelected ? "text-primary-foreground" : "text-muted-foreground group-hover:text-foreground"
-                    )} 
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className={cn(
-                        "font-medium transition-colors",
-                        isSelected ? "text-primary-foreground" : "text-foreground"
-                      )}>
-                        {panel.name}
-                      </h3>
+    <aside 
+      ref={sidebarRef}
+      className="relative border-r border-border bg-secondary/50 min-h-[calc(100vh-4rem)] transition-all duration-300 ease-in-out"
+      style={{ width: `${actualWidth}px` }}
+    >
+      {/* Collapse/Expand Toggle */}
+      <button
+        onClick={toggleCollapse}
+        className="absolute top-4 right-2 z-10 p-1 rounded hover:bg-secondary transition-colors"
+        title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+      >
+        <DotsSixVertical 
+          className={cn(
+            "w-4 h-4 text-muted-foreground transition-transform duration-200",
+            isCollapsed && "rotate-90"
+          )} 
+        />
+      </button>
+
+      {/* Scrollable Content */}
+      <div className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+        <div className="p-6">
+          {!isCollapsed && (
+            <h2 className="text-lg font-semibold text-foreground mb-4">Documentation</h2>
+          )}
+          
+          <div className="space-y-2">
+            {panels.map((panel) => {
+              const IconComponent = iconMap[panel.icon as keyof typeof iconMap] || GridFour
+              const isSelected = selectedPanel === panel.id
+              
+              return (
+                <button
+                  key={panel.id}
+                  onClick={() => onPanelSelect(panel.id)}
+                  className={cn(
+                    "w-full text-left rounded-lg transition-all duration-200 group relative",
+                    isCollapsed ? "p-3 flex justify-center" : "p-4",
+                    isSelected 
+                      ? "bg-primary text-primary-foreground shadow-sm" 
+                      : "hover:bg-secondary text-foreground hover:shadow-sm"
+                  )}
+                  title={isCollapsed ? panel.name : undefined}
+                >
+                  {isCollapsed ? (
+                    <IconComponent 
+                      className={cn(
+                        "w-5 h-5 transition-colors",
+                        isSelected ? "text-primary-foreground" : "text-muted-foreground group-hover:text-foreground"
+                      )} 
+                    />
+                  ) : (
+                    <div className="flex items-start space-x-3">
+                      <IconComponent 
+                        className={cn(
+                          "w-5 h-5 mt-0.5 transition-colors flex-shrink-0",
+                          isSelected ? "text-primary-foreground" : "text-muted-foreground group-hover:text-foreground"
+                        )} 
+                      />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <h3 className={cn(
+                            "font-medium transition-colors truncate",
+                            isSelected ? "text-primary-foreground" : "text-foreground"
+                          )}>
+                            {panel.name}
+                          </h3>
+                        </div>
+                        <p className={cn(
+                          "text-sm mt-1 transition-colors line-clamp-2",
+                          isSelected ? "text-primary-foreground/80" : "text-muted-foreground"
+                        )}>
+                          {panel.description}
+                        </p>
+                      </div>
                     </div>
-                    <p className={cn(
-                      "text-sm mt-1 transition-colors",
-                      isSelected ? "text-primary-foreground/80" : "text-muted-foreground"
-                    )}>
-                      {panel.description}
-                    </p>
-                  </div>
-                </div>
-              </button>
-            )
-          })}
+                  )}
+                </button>
+              )
+            })}
+          </div>
         </div>
       </div>
+
+      {/* Resize Handle */}
+      {!isCollapsed && (
+        <div
+          onMouseDown={handleMouseDown}
+          className={cn(
+            "absolute top-0 right-0 w-1 h-full cursor-col-resize bg-transparent hover:bg-primary/20 transition-colors",
+            isResizing && "bg-primary/30"
+          )}
+        >
+          <div className="absolute top-1/2 right-0 transform -translate-y-1/2 w-1 h-8 bg-border rounded-l" />
+        </div>
+      )}
     </aside>
   )
 }
