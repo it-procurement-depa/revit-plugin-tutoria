@@ -145,7 +145,7 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
     setIsCollapsed(!isCollapsed)
   }
 
-  const actualWidth = isCollapsed ? 60 : width
+  const actualWidth = isCollapsed ? 64 : width
 
   return (
     <aside 
@@ -156,12 +156,15 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
       {/* Collapse/Expand Toggle */}
       <button
         onClick={toggleCollapse}
-        className="absolute top-4 right-2 z-10 p-1 rounded hover:bg-secondary transition-colors"
+        className={cn(
+          "absolute top-4 z-10 p-1.5 rounded-md hover:bg-secondary transition-all duration-200 border border-border/50",
+          isCollapsed ? "right-2 bg-card/80" : "right-2 bg-card/60"
+        )}
         title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
       >
         <DotsSixVertical 
           className={cn(
-            "w-4 h-4 text-muted-foreground transition-transform duration-200",
+            "w-3.5 h-3.5 text-muted-foreground transition-transform duration-200",
             isCollapsed && "rotate-90"
           )} 
         />
@@ -169,12 +172,18 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
 
       {/* Scrollable Content */}
       <div className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
-        <div className="p-6">
+        <div className={cn(
+          "transition-all duration-300",
+          isCollapsed ? "p-2 pt-14" : "p-6"
+        )}>
           {!isCollapsed && (
             <h2 className="text-lg font-semibold text-foreground mb-4">Documentation</h2>
           )}
           
-          <div className="space-y-2">
+          <div className={cn(
+            "transition-all duration-300",
+            isCollapsed ? "space-y-2" : "space-y-2"
+          )}>
             {panels.map((panel) => {
               const IconComponent = iconMap[panel.icon as keyof typeof iconMap] || GridFour
               const isSelected = selectedPanel === panel.id
@@ -184,8 +193,8 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
                   key={panel.id}
                   onClick={() => onPanelSelect(panel.id)}
                   className={cn(
-                    "w-full text-left rounded-lg transition-all duration-200 group relative",
-                    isCollapsed ? "p-3 flex justify-center" : "p-4",
+                    "w-full rounded-lg transition-all duration-200 group relative",
+                    isCollapsed ? "p-3 flex items-center justify-center" : "p-4 text-left",
                     isSelected 
                       ? "bg-primary text-primary-foreground shadow-sm" 
                       : "hover:bg-secondary text-foreground hover:shadow-sm"
@@ -193,12 +202,18 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
                   title={isCollapsed ? panel.name : undefined}
                 >
                   {isCollapsed ? (
-                    <IconComponent 
-                      className={cn(
-                        "w-5 h-5 transition-colors",
-                        isSelected ? "text-primary-foreground" : "text-muted-foreground group-hover:text-foreground"
-                      )} 
-                    />
+                    <div className="relative group">
+                      <IconComponent 
+                        className={cn(
+                          "w-5 h-5 transition-colors",
+                          isSelected ? "text-primary-foreground" : "text-muted-foreground group-hover:text-foreground"
+                        )} 
+                      />
+                      {/* Tooltip for collapsed state */}
+                      <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-2 py-1 bg-card border border-border rounded-md text-sm text-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
+                        {panel.name}
+                      </div>
+                    </div>
                   ) : (
                     <div className="flex items-start space-x-3">
                       <IconComponent 
