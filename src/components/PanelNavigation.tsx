@@ -200,7 +200,7 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
                     <div className="p-3 flex items-center justify-center text-4xl">
                       <IconComponent 
                         className={cn(
-                          "w-5 h-5 transition-colors",
+                          "w-6 h-6 transition-colors",
                           isSelected ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
                         )}
                       />
@@ -210,7 +210,7 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
                       <div className="flex items-start space-x-3">
                         <IconComponent 
                           className={cn(
-                            "w-5 h-5 mt-0.5 flex-shrink-0 transition-colors",
+                            "w-6 h-6 mt-0.5 flex-shrink-0 transition-colors",
                             isSelected ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
                           )}
                         />
