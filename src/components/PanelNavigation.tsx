@@ -12,7 +12,8 @@ import {
   NumberTwo,
   CaretLeft,
   CaretRight,
-  BookOpen
+  BookOpen,
+  FileText
 } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { Panel } from '@/App'
