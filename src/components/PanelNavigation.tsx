@@ -9,7 +9,10 @@ import {
   GridFour,
   CaretLeft,
   CaretRight,
-  BookOpen
+  BookOpen,
+  Info,
+  Wrench,
+  NumberTwo
 } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { Panel } from '@/App'
