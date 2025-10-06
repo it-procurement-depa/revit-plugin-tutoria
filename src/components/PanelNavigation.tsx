@@ -12,7 +12,8 @@ import {
   NumberTwo,
   CaretLeft,
   CaretRight,
-  BookOpen
+  BookOpen,
+  FileText
 } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { Panel } from '@/App'
@@ -199,9 +200,9 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
                 >
                   {isCollapsed ? (
                     <div className="p-3 flex items-center justify-center">
-                      <IconComponent 
+                      <FileText 
                         className={cn(
-                          "w-5 h-5 transition-colors",
+                          "w-6 h-6 transition-colors",
                           isSelected ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
                         )}
                       />
