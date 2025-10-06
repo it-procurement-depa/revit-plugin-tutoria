@@ -1,65 +1,23 @@
-# depa One Click Plugin - Documentation Hub
+# ✨ Welcome to Your Spark Template!
+You've just launched your brand-new Spark Template Codespace — everything’s fired up and ready for you to explore, build, and create with Spark!
 
-A professional documentation hub for depa One Click Plugin with video tutorials, comprehensive guides, and team collaboration features.
+This template is your blank canvas. It comes with a minimal setup to help you get started quickly with Spark development.
 
-## 🚀 Live Demo
+🚀 What's Inside?
+- A clean, minimal Spark environment
+- Pre-configured for local development
+- Ready to scale with your ideas
+  
+🧠 What Can You Do?
 
-**Share this link with your team**: [Your site will be live here after deployment]
+Right now, this is just a starting point — the perfect place to begin building and testing your Spark applications.
 
-## 📋 Features
+🧹 Just Exploring?
+No problem! If you were just checking things out and don’t need to keep this code:
 
-✅ **Modern Documentation Hub** - Professional video-based learning platform  
-✅ **No Authentication Required** - Public access for all team members  
-✅ **Mobile Responsive** - Works perfectly on all devices  
-✅ **Video Tutorials** - Embedded YouTube videos with progress tracking  
-✅ **Panel-Based Navigation** - Organized by different plugin panels  
-✅ **Search Functionality** - Quick video and tutorial discovery  
-✅ **Professional Design** - Clean, modern interface with dark theme  
+- Simply delete your Spark.
+- Everything will be cleaned up — no traces left behind.
 
-## 🌐 Quick Deploy
+📄 License For Spark Template Resources 
 
-### 1-Click Deploy Options:
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy)
-
-**OR**
-
-Push to GitHub and enable GitHub Pages for automatic deployment.
-
-## 🛠 Local Development
-
-```bash
-npm install
-npm run dev
-```
-
-## 📁 Project Structure
-
-```
-src/
-├── components/
-│   ├── Header.tsx          # Main navigation and search
-│   ├── PanelNavigation.tsx # Left sidebar navigation
-│   ├── PanelDetail.tsx     # Main content area
-│   ├── VideoGrid.tsx       # Video thumbnail grid
-│   ├── VideoModal.tsx      # Video player modal
-│   └── YouTubePlayer.tsx   # YouTube embed component
-├── assets/                 # Images and media files
-└── App.tsx                # Main application component
-```
-
-## 🎯 How to Use
-
-1. **Deploy the site** using any of the deployment options above
-2. **Share the live URL** with your team members
-3. **No login required** - anyone with the link can access the documentation
-4. **Browse videos** by panel categories or use search to find specific content
-5. **Watch tutorials** directly in the browser with progress tracking
-
-## 📖 See Full Deployment Guide
-
-Check [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions and options.
-
-## 📄 License
-
-MIT License - See LICENSE file for details.
+The Spark Template files and resources from GitHub are licensed under the terms of the MIT license, Copyright GitHub, Inc.

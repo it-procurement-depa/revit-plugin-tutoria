@@ -1,5 +1,22 @@
 import { useState } from 'react'
-import { Play, ArrowSquareOut, Book, Video, Target, Wrench, ChatCircle, CheckCircle, Plus } from '@phosphor-icons/react'
+import { 
+  Play, 
+  ArrowSquareOut, 
+  Book, 
+  Video, 
+  Target, 
+  Wrench, 
+  ChatCircle, 
+  CheckCircle, 
+  Plus,
+  Info, 
+  Certificate, 
+  Ruler, 
+  NumberTwo, 
+  Heart,
+  Toolbox,
+  ArrowRight
+} from '@phosphor-icons/react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -109,6 +126,18 @@ const upcomingTools: UpcomingTool[] = [
     estimatedRelease: 'Q2 2024'
   }
 ]
+
+// Icon mapping for panels
+const panelIconMap = {
+  about: Info,
+  licenses: Certificate,
+  openings: Wrench,
+  standards: Ruler,
+  step2: NumberTwo,
+  'model-health': Heart,
+  utilities: Toolbox,
+  'up-next': ArrowRight
+}
 
 const panelDetails: Record<string, PanelInfo> = {
   about: {
@@ -321,41 +350,52 @@ export function PanelDetail({ panelId, onPanelSelect }: PanelDetailProps) {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Object.values(panelDetails).map((panel) => (
-            <Card 
-              key={panel.id} 
-              className={cn(
-                "hover:shadow-lg transition-all duration-200",
-                onPanelSelect && "cursor-pointer hover:scale-[1.02]"
-              )}
-              onClick={() => onPanelSelect && onPanelSelect(panel.id)}
-            >
-              <CardHeader>
-                <CardTitle className="text-lg">{panel.name}</CardTitle>
-                <CardDescription className="text-sm leading-relaxed">
-                  {panel.brief}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex flex-wrap gap-2">
-                    <Badge variant="secondary" className="text-xs">
-                      {panel.description.features.length} Features
-                    </Badge>
-                    <Badge variant="outline" className="text-xs">
-                      Video Guide
-                    </Badge>
+          {Object.values(panelDetails).map((panel) => {
+            const PanelIcon = panelIconMap[panel.id as keyof typeof panelIconMap] || Book
+            
+            return (
+              <Card 
+                key={panel.id} 
+                className={cn(
+                  "hover:shadow-lg transition-all duration-200",
+                  onPanelSelect && "cursor-pointer hover:scale-[1.02]"
+                )}
+                onClick={() => onPanelSelect && onPanelSelect(panel.id)}
+              >
+                <CardHeader>
+                  <div className="flex items-start space-x-3 mb-2">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <PanelIcon className="w-5 h-5 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <CardTitle className="text-lg">{panel.name}</CardTitle>
+                    </div>
                   </div>
-                  {onPanelSelect && (
-                    <Button variant="ghost" size="sm" className="w-full mt-3">
-                      <ArrowSquareOut className="w-4 h-4 mr-2" />
-                      View Documentation
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  <CardDescription className="text-sm leading-relaxed">
+                    {panel.brief}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="secondary" className="text-xs">
+                        {panel.description.features.length} Features
+                      </Badge>
+                      <Badge variant="outline" className="text-xs">
+                        Video Guide
+                      </Badge>
+                    </div>
+                    {onPanelSelect && (
+                      <Button variant="ghost" size="sm" className="w-full mt-3">
+                        <ArrowSquareOut className="w-4 h-4 mr-2" />
+                        View Documentation
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            )
+          })}
         </div>
       </div>
     )
@@ -500,7 +540,10 @@ export function PanelDetail({ panelId, onPanelSelect }: PanelDetailProps) {
       <div className="mb-8">
         <div className="flex items-center space-x-3 mb-4">
           <div className="p-2 bg-primary/10 rounded-lg">
-            <Book className="w-6 h-6 text-primary" />
+            {(() => {
+              const PanelIcon = panelIconMap[panel.id as keyof typeof panelIconMap] || Book
+              return <PanelIcon className="w-6 h-6 text-primary" />
+            })()}
           </div>
           <div>
             <h1 className="text-3xl font-bold text-foreground">{panel.name}</h1>

@@ -1,5 +1,18 @@
 import { useMemo } from 'react'
-import { Play, Clock, CheckCircle } from '@phosphor-icons/react'
+import { 
+  Play, 
+  Clock, 
+  CheckCircle,
+  Info, 
+  Certificate, 
+  Wrench, 
+  Ruler, 
+  NumberTwo, 
+  Heart,
+  Toolbox,
+  ArrowRight,
+  GridFour
+} from '@phosphor-icons/react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
@@ -151,6 +164,19 @@ const sampleVideos: Video[] = [
   }
 ]
 
+// Icon mapping for each panel
+const panelIconMap = {
+  about: Info,
+  licenses: Certificate,
+  openings: Wrench,
+  standards: Ruler,
+  step2: NumberTwo,
+  'model-health': Heart,
+  utilities: Toolbox,
+  'up-next': ArrowRight,
+  all: GridFour
+}
+
 export function VideoGrid({ selectedPanel, searchQuery, watchedVideos, onVideoSelect }: VideoGridProps) {
   const filteredVideos = useMemo(() => {
     let videos = sampleVideos
@@ -213,6 +239,7 @@ export function VideoGrid({ selectedPanel, searchQuery, watchedVideos, onVideoSe
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredVideos.map((video) => {
           const isWatched = watchedVideos.includes(video.id)
+          const PanelIcon = panelIconMap[video.panel as keyof typeof panelIconMap] || GridFour
           
           return (
             <Card 
@@ -251,11 +278,14 @@ export function VideoGrid({ selectedPanel, searchQuery, watchedVideos, onVideoSe
               
               <CardHeader className="pb-2">
                 <div className="flex items-start justify-between">
-                  <CardTitle className="text-sm font-medium leading-tight group-hover:text-primary transition-colors">
-                    {video.title}
-                  </CardTitle>
+                  <div className="flex items-start space-x-2 flex-1">
+                    <PanelIcon className="w-4 h-4 mt-0.5 text-primary flex-shrink-0" />
+                    <CardTitle className="text-sm font-medium leading-tight group-hover:text-primary transition-colors">
+                      {video.title}
+                    </CardTitle>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 ml-6">
                   <Badge variant="outline" className="text-xs">
                     {video.tool}
                   </Badge>
@@ -266,7 +296,7 @@ export function VideoGrid({ selectedPanel, searchQuery, watchedVideos, onVideoSe
               </CardHeader>
               
               <CardContent>
-                <CardDescription className="text-xs leading-relaxed">
+                <CardDescription className="text-xs leading-relaxed ml-6">
                   {video.description}
                 </CardDescription>
               </CardContent>
