@@ -1,13 +1,11 @@
 import React, { useState, useRef, useCallback } from 'react'
 import { 
-  Info, 
-  Certificate, 
-  Wrench, 
+  Certificate,
   Ruler, 
-  NumberTwo, 
   Heart,
-  Toolbox,
   ArrowRight,
+  DotsSixVertical,
+  Toolbox,
   GridFour,
   CaretLeft,
   CaretRight,
@@ -16,79 +14,73 @@ import {
 import { cn } from '@/lib/utils'
 import { Panel } from '@/App'
 
-interface PanelNavigationProps {
-  selectedPanel: string
-  onPanelSelect: (panelId: string) => void
-}
-
 const panels: Panel[] = [
   {
     id: 'all',
-    name: 'All Documentation',
+    name: 'All Panels',
     icon: 'GridFour',
-    description: 'Browse all available documentation',
-    videoCount: 0
+    description: 'Overview of all available plugin panels and tools',
+    videoCount: 8
   },
   {
     id: 'about',
     name: 'About',
     icon: 'Info',
     description: 'Plugin overview and introduction',
-    videoCount: 0
+    videoCount: 1
   },
   {
     id: 'licenses',
-    name: 'Licenses Manager',
+    name: 'Licenses',
     icon: 'Certificate',
     description: 'License management and activation',
-    videoCount: 0
+    videoCount: 1
   },
   {
     id: 'openings',
-    name: 'Openings Tools',
+    name: 'Openings',
     icon: 'Wrench',
     description: 'Opening creation and modification tools',
-    videoCount: 0
+    videoCount: 1
   },
   {
     id: 'standards',
-    name: 'Standards Tools',
+    name: 'Standards',
     icon: 'Ruler',
-    description: 'Standard compliance and setup tools',
-    videoCount: 0
+    description: 'Standards configuration and compliance',
+    videoCount: 1
   },
   {
     id: 'step2',
-    name: 'Step 2 Tools',
+    name: 'Step 2',
     icon: 'NumberTwo',
-    description: 'Advanced workflow step 2 tools',
-    videoCount: 0
+    description: 'Advanced workflow automation tools',
+    videoCount: 1
   },
   {
     id: 'model-health',
-    name: 'Model Health Tools',
+    name: 'Model Health',
     icon: 'Heart',
-    description: 'Model validation and health checks',
-    videoCount: 0
+    description: 'Model diagnostics and health validation',
+    videoCount: 1
   },
   {
     id: 'utilities',
-    name: 'Utilities Tools',
+    name: 'Utilities',
     icon: 'Toolbox',
-    description: 'General utility and helper tools',
-    videoCount: 0
+    description: 'Utility tools and productivity enhancers',
+    videoCount: 1
   },
   {
     id: 'up-next',
     name: 'Up Next',
     icon: 'ArrowRight',
-    description: 'Upcoming features and tutorials',
-    videoCount: 0
+    description: 'Upcoming features and development roadmap',
+    videoCount: 1
   }
 ]
 
 const iconMap = {
-  GridFour,
   Info,
   Certificate,
   Wrench,
@@ -96,37 +88,40 @@ const iconMap = {
   NumberTwo,
   Heart,
   Toolbox,
-  ArrowRight
+  ArrowRight,
+  GridFour
+}
+
+interface PanelNavigationProps {
+  selectedPanel: string
+  onPanelSelect: (panelId: string) => void
 }
 
 export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigationProps) {
-  const [width, setWidth] = useState(320) // Default width of 320px (w-80)
   const [isResizing, setIsResizing] = useState(false)
   const [isCollapsed, setIsCollapsed] = useState(false)
+  const [sidebarWidth, setSidebarWidth] = useState(280)
   const sidebarRef = useRef<HTMLDivElement>(null)
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    setIsResizing(true)
     e.preventDefault()
+    setIsResizing(true)
   }, [])
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!isResizing) return
     
     const newWidth = e.clientX
-    const minWidth = 250
-    const maxWidth = 600
+    const minWidth = 200
+    const maxWidth = 400
     
-    if (newWidth >= minWidth && newWidth <= maxWidth) {
-      setWidth(newWidth)
-    }
+    setSidebarWidth(Math.min(Math.max(newWidth, minWidth), maxWidth))
   }, [isResizing])
 
   const handleMouseUp = useCallback(() => {
     setIsResizing(false)
   }, [])
 
-  // Add global mouse move and mouse up listeners
   React.useEffect(() => {
     if (isResizing) {
       document.addEventListener('mousemove', handleMouseMove)
@@ -134,7 +129,7 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
       document.body.style.cursor = 'col-resize'
       document.body.style.userSelect = 'none'
     }
-
+    
     return () => {
       document.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mouseup', handleMouseUp)
@@ -147,21 +142,19 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
     setIsCollapsed(!isCollapsed)
   }
 
-  const actualWidth = isCollapsed ? 64 : width
-
   return (
-    <aside 
+    <aside
       ref={sidebarRef}
-      className="relative border-r border-border bg-secondary/50 min-h-[calc(100vh-4rem)] transition-all duration-300 ease-in-out"
-      style={{ width: `${actualWidth}px` }}
+      className={cn(
+        "relative bg-card border-r border-border flex-shrink-0 transition-all duration-300",
+        isCollapsed ? "w-16" : ""
+      )}
+      style={{ width: isCollapsed ? '64px' : `${sidebarWidth}px` }}
     >
       {/* Collapse/Expand Toggle */}
       <button
         onClick={toggleCollapse}
-        className={cn(
-          "absolute top-4 z-10 p-1.5 rounded-md hover:bg-secondary transition-all duration-200 border border-border/50",
-          isCollapsed ? "right-2 bg-card/80" : "right-2 bg-card/60"
-        )}
+        className="absolute -right-3 top-6 z-10 bg-card border border-border rounded-full p-1 hover:bg-accent transition-colors shadow-sm"
         title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
       >
         {isCollapsed ? (
@@ -170,8 +163,6 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
           <CaretLeft className="w-3.5 h-3.5 text-muted-foreground" />
         )}
       </button>
-
-      {/* Scrollable Content */}
       <div className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
         <div className={cn(
           "transition-all duration-300",
@@ -188,85 +179,81 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
             <h2 className="text-lg font-semibold text-foreground mb-4">Documentation</h2>
           )}
           
-          <div className={cn(
-            "transition-all duration-300",
-            isCollapsed ? "space-y-2" : "space-y-2"
-          )}>
-            {panels.map((panel) => {
-              const IconComponent = iconMap[panel.icon as keyof typeof iconMap] || GridFour
-              const isSelected = selectedPanel === panel.id
-              
-              return (
+          {!isCollapsed && (
+            <div className="mb-6">
+              <h2 className="text-lg font-semibold text-foreground mb-1">Documentation</h2>
+              <p className="text-xs text-muted-foreground">Navigate through plugin panels</p>
+            </div>
+          )}
+
+          {panels.map((panel) => {
+            const isSelected = selectedPanel === panel.id
+            const IconComponent = iconMap[panel.icon as keyof typeof iconMap]
+            
+            return (
+              <div key={panel.id}>
                 <button
-                  key={panel.id}
                   onClick={() => onPanelSelect(panel.id)}
                   className={cn(
-                    "w-full rounded-lg transition-all duration-200 group relative",
-                    isCollapsed ? "p-3 flex items-center justify-center" : "p-4 text-left",
-                    isSelected 
-                      ? "bg-primary text-primary-foreground shadow-sm" 
-                      : "hover:bg-secondary text-foreground hover:shadow-sm"
+                    "w-full text-left rounded-lg transition-all duration-200 group relative",
+                    "hover:bg-accent/50 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+                    isSelected && "bg-primary/10 border border-primary/20 hover:bg-primary/15"
                   )}
                   title={isCollapsed ? panel.name : undefined}
                 >
                   {isCollapsed ? (
-                    <div className="relative group">
+                    <div className="p-3 flex items-center justify-center text-4xl">
                       <IconComponent 
                         className={cn(
-                          "w-5 h-5 transition-colors",
-                          isSelected ? "text-primary-foreground" : "text-muted-foreground group-hover:text-foreground"
-                        )} 
+                          "w-6 h-6 transition-colors",
+                          isSelected ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
+                        )}
                       />
-                      {/* Tooltip for collapsed state */}
-                      <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-2 py-1 bg-card border border-border rounded-md text-sm text-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
-                        {panel.name}
-                      </div>
                     </div>
                   ) : (
-                    <div className="flex items-start space-x-3">
-                      <IconComponent 
-                        className={cn(
-                          "w-5 h-5 mt-0.5 transition-colors flex-shrink-0",
-                          isSelected ? "text-primary-foreground" : "text-muted-foreground group-hover:text-foreground"
-                        )} 
-                      />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between">
+                    <div className="p-3">
+                      <div className="flex items-start space-x-3">
+                        <IconComponent 
+                          className={cn(
+                            "w-6 h-6 mt-0.5 flex-shrink-0 transition-colors",
+                            isSelected ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
+                          )}
+                        />
+                        <div className="flex-1 min-w-0">
                           <h3 className={cn(
-                            "font-medium transition-colors truncate",
-                            isSelected ? "text-primary-foreground" : "text-foreground"
+                            "font-medium text-sm leading-tight transition-colors",
+                            isSelected ? "text-primary" : "text-foreground group-hover:text-foreground"
                           )}>
                             {panel.name}
                           </h3>
+                          <p className="text-xs text-muted-foreground mt-1 leading-tight">
+                            {panel.description}
+                          </p>
+                          <div className="flex items-center justify-between mt-2">
+                            <span className="text-xs text-muted-foreground">
+                              {panel.videoCount} {panel.videoCount === 1 ? 'tutorial' : 'tutorials'}
+                            </span>
+                          </div>
                         </div>
-                        <p className={cn(
-                          "text-sm mt-1 transition-colors line-clamp-2",
-                          isSelected ? "text-primary-foreground/80" : "text-muted-foreground"
-                        )}>
-                          {panel.description}
-                        </p>
                       </div>
                     </div>
                   )}
                 </button>
-              )
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
       </div>
-
       {/* Resize Handle */}
       {!isCollapsed && (
         <div
-          onMouseDown={handleMouseDown}
           className={cn(
-            "absolute top-0 right-0 w-1 h-full cursor-col-resize bg-transparent hover:bg-primary/20 transition-colors",
+            "absolute top-0 right-0 w-1 h-full cursor-col-resize bg-border/50 hover:bg-border transition-colors",
             isResizing && "bg-primary/30"
           )}
-        >
-          <div className="absolute top-1/2 right-0 transform -translate-y-1/2 w-1 h-8 bg-border rounded-l" />
-        </div>
+          onMouseDown={handleMouseDown}
+        />
       )}
     </aside>
-  )
+  );
 }

@@ -10,7 +10,7 @@ Your site will be automatically deployed when you push to GitHub:
    - Go to your repository Settings
    - Scroll to "Pages" section
    - Set Source to "GitHub Actions"
-3. **Your site will be live at**: `https://[your-username].github.io/spark-template/`
+3. **Your site will be live at**: `https://it-procurement-depa.github.io/revit-plugin-tutoria/`
 
 ### Option 2: Netlify (Instant Deploy)
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy)
@@ -39,7 +39,7 @@ The built files will be in the `dist/` folder.
 
 Once deployed, you can share these URLs with your team:
 
-- **GitHub Pages**: `https://[username].github.io/spark-template/`
+- **GitHub Pages**: `https://it-procurement-depa.github.io/revit-plugin-tutoria/`
 - **Netlify**: Will provide a custom URL like `https://amazing-site-123456.netlify.app`
 - **Vercel**: Will provide a URL like `https://your-site.vercel.app`
 
