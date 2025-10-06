@@ -18,8 +18,8 @@ export function Header({ searchQuery, onSearchChange, showVideoGrid = false, onT
           <div className="flex items-center space-x-3">
             <DepaLogo className="w-12 h-12 shadow-lg" />
             <div>
-              <h1 className="text-xl font-bold text-foreground tracking-wide font-audiowide">One Click Plugin</h1>
-              <p className="text-xs text-muted-foreground font-medium">Revit Plugin Documentation</p>
+              <h1 className="text-xl font-bold text-foreground tracking-wide font-audiowide">One Click Documentation</h1>
+              <p className="text-xs text-muted-foreground font-medium">Version 1.0</p>
             </div>
           </div>
         </div>
