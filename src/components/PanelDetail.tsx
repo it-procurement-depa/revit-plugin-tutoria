@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils'
 
 interface PanelDetailProps {
   panelId: string
+  onPanelSelect?: (panelId: string) => void
 }
 
 interface PanelInfo {
@@ -114,7 +115,7 @@ const panelDetails: Record<string, PanelInfo> = {
     id: 'about',
     name: 'About',
     brief: 'Learn about the One Click Plugin and discover how it revolutionizes your Revit workflow with powerful automation tools.',
-    youtubeVideoId: 'dQw4w9WgXcQ', // Placeholder - replace with actual video ID
+    youtubeVideoId: 'dI5tzNvXS20',
     description: {
       overview: 'The One Click Plugin is a comprehensive toolkit designed to streamline your Revit workflow. With intuitive automation and smart tools, it reduces manual tasks and increases productivity across all phases of your project.',
       features: [
@@ -138,7 +139,7 @@ const panelDetails: Record<string, PanelInfo> = {
     id: 'licenses',
     name: 'Licenses Manager',
     brief: 'Manage your plugin licenses efficiently with our comprehensive licensing system that supports individual and team deployments.',
-    youtubeVideoId: 'dQw4w9WgXcQ',
+    youtubeVideoId: '6ShoMBSKq8Y',
     description: {
       overview: 'The License Manager provides a centralized system for activating, managing, and monitoring plugin licenses across your organization. It supports both individual and enterprise licensing models.',
       features: [
@@ -186,7 +187,7 @@ const panelDetails: Record<string, PanelInfo> = {
     id: 'standards',
     name: 'Standards Tools',
     brief: 'Ensure project consistency and compliance with comprehensive standards management and validation tools.',
-    youtubeVideoId: 'dQw4w9WgXcQ',
+    youtubeVideoId: '22CgdvemI5k',
     description: {
       overview: 'Standards Tools help maintain consistency across projects by automating the application and validation of modeling standards, naming conventions, and project requirements.',
       features: [
@@ -210,7 +211,7 @@ const panelDetails: Record<string, PanelInfo> = {
     id: 'step2',
     name: 'Step 2 Tools',
     brief: 'Advanced workflow automation for the second phase of your modeling process with intelligent decision-making capabilities.',
-    youtubeVideoId: 'dQw4w9WgXcQ',
+    youtubeVideoId: '2ItmUoybhAY',
     description: {
       overview: 'Step 2 Tools represent the advanced phase of workflow automation, building upon initial model setup with sophisticated analysis and optimization capabilities.',
       features: [
@@ -234,7 +235,7 @@ const panelDetails: Record<string, PanelInfo> = {
     id: 'model-health',
     name: 'Model Health Tools',
     brief: 'Comprehensive model diagnostics and health monitoring to ensure optimal performance and reliability.',
-    youtubeVideoId: 'dQw4w9WgXcQ',
+    youtubeVideoId: 'FKWpAabjsIs',
     description: {
       overview: 'Model Health Tools provide comprehensive diagnostics and monitoring capabilities to ensure your Revit models maintain optimal performance, accuracy, and reliability throughout the project lifecycle.',
       features: [
@@ -258,7 +259,7 @@ const panelDetails: Record<string, PanelInfo> = {
     id: 'utilities',
     name: 'Utilities Tools',
     brief: 'A collection of powerful utility tools designed to enhance productivity and streamline common Revit tasks.',
-    youtubeVideoId: 'dQw4w9WgXcQ',
+    youtubeVideoId: 'L5e9qImbIcQ',
     description: {
       overview: 'Utilities Tools offer a comprehensive suite of helper functions and productivity enhancers that address common challenges and repetitive tasks in Revit workflows.',
       features: [
@@ -304,7 +305,7 @@ const panelDetails: Record<string, PanelInfo> = {
   }
 }
 
-export function PanelDetail({ panelId }: PanelDetailProps) {
+export function PanelDetail({ panelId, onPanelSelect }: PanelDetailProps) {
   const [showFullDescription, setShowFullDescription] = useState(false)
   
   // Show all panels overview if 'all' is selected
@@ -321,7 +322,14 @@ export function PanelDetail({ panelId }: PanelDetailProps) {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {Object.values(panelDetails).map((panel) => (
-            <Card key={panel.id} className="hover:shadow-lg transition-all duration-200">
+            <Card 
+              key={panel.id} 
+              className={cn(
+                "hover:shadow-lg transition-all duration-200",
+                onPanelSelect && "cursor-pointer hover:scale-[1.02]"
+              )}
+              onClick={() => onPanelSelect && onPanelSelect(panel.id)}
+            >
               <CardHeader>
                 <CardTitle className="text-lg">{panel.name}</CardTitle>
                 <CardDescription className="text-sm leading-relaxed">
@@ -338,6 +346,12 @@ export function PanelDetail({ panelId }: PanelDetailProps) {
                       Video Guide
                     </Badge>
                   </div>
+                  {onPanelSelect && (
+                    <Button variant="ghost" size="sm" className="w-full mt-3">
+                      <ArrowSquareOut className="w-4 h-4 mr-2" />
+                      View Documentation
+                    </Button>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -418,7 +432,14 @@ export function PanelDetail({ panelId }: PanelDetailProps) {
               }
               
               return (
-                <Card key={tool.id} className="hover:shadow-lg transition-all duration-200 relative">
+                <Card 
+                  key={tool.id} 
+                  className="hover:shadow-lg transition-all duration-200 relative cursor-pointer hover:scale-[1.02]"
+                  onClick={() => {
+                    // For upcoming tools, we can show a toast or message
+                    console.log(`${tool.name} is ${tool.status} - Expected: ${tool.estimatedRelease}`)
+                  }}
+                >
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-3">

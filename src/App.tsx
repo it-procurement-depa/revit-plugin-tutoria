@@ -45,6 +45,7 @@ function App() {
         <main className="flex-1 p-6">
           <PanelDetail 
             panelId={selectedPanel}
+            onPanelSelect={setSelectedPanel}
           />
         </main>
       </div>
