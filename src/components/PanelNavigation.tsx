@@ -9,7 +9,9 @@ import {
   Toolbox,
   ArrowRight,
   GridFour,
-  DotsSixVertical
+  CaretLeft,
+  CaretRight,
+  BookOpen
 } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { Panel } from '@/App'
@@ -162,12 +164,11 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
         )}
         title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
       >
-        <DotsSixVertical 
-          className={cn(
-            "w-3.5 h-3.5 text-muted-foreground transition-transform duration-200",
-            isCollapsed && "rotate-90"
-          )} 
-        />
+        {isCollapsed ? (
+          <CaretRight className="w-3.5 h-3.5 text-muted-foreground" />
+        ) : (
+          <CaretLeft className="w-3.5 h-3.5 text-muted-foreground" />
+        )}
       </button>
 
       {/* Scrollable Content */}
@@ -176,7 +177,14 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
           "transition-all duration-300",
           isCollapsed ? "p-2 pt-14" : "p-6"
         )}>
-          {!isCollapsed && (
+          {isCollapsed ? (
+            <>
+              {/* Dictionary Icon for minimized state */}
+              <div className="flex items-center justify-center mb-4">
+                <BookOpen className="w-6 h-6 text-primary" />
+              </div>
+            </>
+          ) : (
             <h2 className="text-lg font-semibold text-foreground mb-4">Documentation</h2>
           )}
           
