@@ -1,13 +1,16 @@
-import { MagnifyingGlass } from '@phosphor-icons/react'
+import { MagnifyingGlass, Video } from '@phosphor-icons/react'
 import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 import { DepaLogo } from '@/components/DepaLogo'
 
 interface HeaderProps {
   searchQuery: string
   onSearchChange: (query: string) => void
+  showVideoGrid?: boolean
+  onToggleView?: () => void
 }
 
-export function Header({ searchQuery, onSearchChange }: HeaderProps) {
+export function Header({ searchQuery, onSearchChange, showVideoGrid = false, onToggleView }: HeaderProps) {
   return (
     <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
       <div className="flex h-16 items-center justify-between px-6">
@@ -34,6 +37,17 @@ export function Header({ searchQuery, onSearchChange }: HeaderProps) {
         </div>
 
         <div className="flex items-center space-x-2">
+          {onToggleView && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onToggleView}
+              className="flex items-center space-x-2"
+            >
+              <Video className="w-4 h-4" />
+              <span>{showVideoGrid ? 'Documentation' : 'Tutorials'}</span>
+            </Button>
+          )}
           <div className="text-right">
             <div className="text-sm font-medium text-foreground">Plugin Documentation</div>
             <div className="text-xs text-muted-foreground">Version 2025.1.2</div>

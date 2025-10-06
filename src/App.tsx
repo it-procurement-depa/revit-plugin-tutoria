@@ -1,7 +1,12 @@
 import { useState } from 'react'
+import { useKV } from '@github/spark/hooks'
 import { Header } from '@/components/Header'
 import { PanelNavigation } from '@/components/PanelNavigation'
 import { PanelDetail } from '@/components/PanelDetail'
+import { VideoGrid } from '@/components/VideoGrid'
+import { VideoModal } from '@/components/VideoModal'
+import { Toaster } from '@/components/ui/sonner'
+import { toast } from 'sonner'
 
 export interface Video {
   id: string
@@ -28,27 +33,104 @@ export interface Panel {
 function App() {
   const [selectedPanel, setSelectedPanel] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState('')
+  const [showVideoGrid, setShowVideoGrid] = useState(false)
+  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
+  
+  // Persistent state using KV store
+  const [watchedVideos, setWatchedVideos] = useKV<string[]>('watched-videos', [])
+  const [userPreferences, setUserPreferences] = useKV<{
+    autoPlayVideos: boolean
+    defaultPanel: string
+    showCompletedVideos: boolean
+  }>('user-preferences', {
+    autoPlayVideos: false,
+    defaultPanel: 'about',
+    showCompletedVideos: true
+  })
+
+  const handlePanelSelect = (panelId: string) => {
+    setSelectedPanel(panelId)
+    setShowVideoGrid(false)
+    setSearchQuery('')
+  }
+
+  const handleVideoSelect = (video: Video) => {
+    setSelectedVideo(video)
+    setIsVideoModalOpen(true)
+  }
+
+  const handleMarkVideoWatched = (videoId: string) => {
+    setWatchedVideos((currentWatched) => {
+      const watched = currentWatched || []
+      const isCurrentlyWatched = watched.includes(videoId)
+      if (isCurrentlyWatched) {
+        toast.success('Video marked as unwatched')
+        return watched.filter(id => id !== videoId)
+      } else {
+        toast.success('Video marked as completed!')
+        return [...watched, videoId]
+      }
+    })
+  }
+
+  const handleVideoModalClose = () => {
+    setIsVideoModalOpen(false)
+    setSelectedVideo(null)
+  }
+
+  const handleVideoNavigation = (video: Video) => {
+    setSelectedVideo(video)
+  }
+
+  const toggleVideoGrid = () => {
+    setShowVideoGrid(!showVideoGrid)
+  }
+
+  const isVideoWatched = selectedVideo ? (watchedVideos || []).includes(selectedVideo.id) : false
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header 
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
+        showVideoGrid={showVideoGrid}
+        onToggleView={toggleVideoGrid}
       />
       
       <div className="flex overflow-hidden">
         <PanelNavigation 
           selectedPanel={selectedPanel}
-          onPanelSelect={setSelectedPanel}
+          onPanelSelect={handlePanelSelect}
         />
         
         <main className="flex-1 p-6 overflow-y-auto">
-          <PanelDetail 
-            panelId={selectedPanel}
-            onPanelSelect={setSelectedPanel}
-          />
+          {showVideoGrid ? (
+            <VideoGrid
+              selectedPanel={selectedPanel}
+              searchQuery={searchQuery}
+              watchedVideos={watchedVideos || []}
+              onVideoSelect={handleVideoSelect}
+            />
+          ) : (
+            <PanelDetail 
+              panelId={selectedPanel}
+              onPanelSelect={handlePanelSelect}
+            />
+          )}
         </main>
       </div>
+
+      <VideoModal
+        video={selectedVideo}
+        isOpen={isVideoModalOpen}
+        onClose={handleVideoModalClose}
+        onMarkWatched={handleMarkVideoWatched}
+        isWatched={isVideoWatched}
+        onNavigate={handleVideoNavigation}
+      />
+
+      <Toaster />
     </div>
   )
 }
