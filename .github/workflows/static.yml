@@ -27,7 +27,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18' # Change this if your project needs another Node version
+          node-version: '20' # Updated to Node.js 20 for dependency compatibility
 
       - name: Install dependencies
         run: npm ci # Use 'npm install' if you don't have a lockfile
@@ -41,7 +41,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './build' # Change to './dist' if your build output folder is named 'dist'
+          path: './dist' # Vite builds to 'dist' directory
 
       - name: Deploy to GitHub Pages
         id: deployment
