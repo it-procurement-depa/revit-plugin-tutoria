@@ -1,6 +1,6 @@
 import { MagnifyingGlass, Video, FileText } from '@phosphor-icons/react'
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { DepaLogo } from '@/components/DepaLogo'
 
 interface HeaderProps {
@@ -23,18 +23,18 @@ export function Header({ searchQuery = '', onSearchChange, showVideoGrid = false
           <div className="relative flex-1 max-w-md mx-8">
             <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
             <Input
+              className="pl-10 bg-input border-border text-foreground placeholder:text-muted-foreground"
               placeholder="Search panels, videos, or documentation..."
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="pl-10"
             />
           </div>
         )}
-        
+
         {onToggleView && (
           <div className="flex items-center space-x-2">
             <Button 
-              variant="outline" 
+              variant="outline"
               size="sm"
               onClick={onToggleView}
               className="flex items-center space-x-2"
