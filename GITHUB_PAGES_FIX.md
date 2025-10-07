@@ -1,58 +1,75 @@
 # GitHub Pages Deployment Fix
 
 ## Problem
-The website was showing a blank screen with the error:
+The website was showing MIME type errors:
 ```
-Loading module from "https://it-procurement-depa.github.io/src/main.tsx" was blocked because of a disallowed MIME type ("text/html").
+Loading module from "https://revit-plugin-tutoria--it-procurement-depa.github.app/revit-plugin-tutoria/assets/index-CxaJ1kDg.js" was blocked because of a disallowed MIME type ("text/html").
 ```
 
 ## Root Cause
 The issue occurred because:
-1. GitHub Actions was looking for build output in `./build` but Vite outputs to `./dist`
-2. Vite wasn't configured with the correct base path for GitHub Pages deployment
-3. The index.html was using absolute paths instead of relative paths
+1. Vite wasn't configured with the correct base path for GitHub Pages deployment
+2. Index.html was incorrectly importing CSS files directly instead of letting Vite handle it
+3. GitHub Pages was not serving JavaScript modules with proper MIME types
 
 ## Fixes Applied
 
-### 1. Updated GitHub Actions Workflow
-Fixed `.github/workflows/static.yml` to look for build output in the correct directory:
-```yaml
-- name: Upload artifact
-  uses: actions/upload-pages-artifact@v3
-  with:
-    path: './dist'  # Changed from './build'
-```
-
-### 2. Configured Vite Base Path
-Updated `vite.config.ts` to include the repository name in the base path:
+### 1. Updated Vite Configuration
+Fixed `vite.config.ts` to include the repository name in the base path and proper build configuration:
 ```typescript
 export default defineConfig({
-  base: '/revit-plugin-tutoria/',  // Added this line
-  // ... rest of config
+  base: '/revit-plugin-tutoria/',
+  // ... other config
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
+  }
 });
 ```
 
-### 3. Fixed Index.html Paths
-Changed absolute paths to relative paths in `index.html`:
+### 2. Fixed Index.html Structure
+Removed direct CSS import from `index.html` since Vite handles this through main.tsx:
 ```html
-<link href="./src/main.css" rel="stylesheet" />  <!-- Changed from /src/main.css -->
-<script type="module" src="./src/main.tsx"></script>  <!-- Changed from /src/main.tsx -->
+<!-- Removed this line: -->
+<!-- <link href="/src/main.css" rel="stylesheet" /> -->
+
+<!-- Kept only the module script: -->
+<script type="module" src="/src/main.tsx"></script>
 ```
+
+### 3. Added MIME Type Configuration
+Created `public/_headers` and updated `netlify.toml` to ensure proper MIME types are served.
+
+### 4. Updated GitHub Actions Workflow
+Enhanced `.github/workflows/static.yml` with:
+- Node.js 20 with npm caching
+- Better debugging output
+- Automatic .nojekyll file creation
+- Proper build artifact handling
 
 ## Deployment Steps
 
-1. **Commit and push these changes** to your GitHub repository
-2. **Ensure GitHub Pages is configured**:
-   - Go to Settings → Pages
-   - Set Source to "GitHub Actions"
-3. **The workflow will automatically run** and deploy your site
-4. **Your site will be available** at: https://it-procurement-depa.github.io/revit-plugin-tutoria/
+1. **These changes are already committed** - the fixes are in place
+2. **GitHub Pages will automatically deploy** on the next push to main branch
+3. **Your site will be available** at: https://it-procurement-depa.github.io/revit-plugin-tutoria/
+
+## How It Works Now
+
+1. **Development**: Vite serves files with proper MIME types locally
+2. **Build**: Vite processes and bundles all assets with correct paths
+3. **Deployment**: GitHub Actions builds and deploys static files with proper configuration
+4. **Production**: GitHub Pages serves the built files with correct MIME types
 
 ## Verification
-After deployment, the site should load properly without the MIME type error. The build process will:
-- Compile TypeScript to JavaScript
-- Bundle all assets with correct paths
-- Deploy the static files to GitHub Pages
+After deployment, the site should load properly without MIME type errors. All JavaScript modules will be served with `application/javascript` MIME type and CSS with `text/css`.
 
-## Future Deployments
-Any future pushes to the main branch will automatically trigger a new deployment.
+## Technical Details
+- **Build Output**: All files go to `dist/` directory
+- **Base Path**: Configured for `/revit-plugin-tutoria/` subdirectory
+- **Module Loading**: Vite handles all module resolution and bundling
+- **Asset Hashing**: Vite automatically adds content hashes for caching
