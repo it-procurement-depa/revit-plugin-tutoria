@@ -10,40 +10,44 @@ interface HeaderProps {
   onToggleView?: () => void
 }
 
-export function Header({ searchQuery = '', onSearchChange, showVideoGrid = false, onToggleView }: HeaderProps) {
+export function Header({ 
+  searchQuery = '', 
+  onSearchChange,
+  showVideoGrid = false,
+  onToggleView 
+}: HeaderProps) {
   return (
-    <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-      <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
+    <header className="bg-card border-b border-border px-6 py-3">
+      <div className="flex items-center justify-between max-w-full">
         <div className="flex items-center space-x-4">
           <DepaLogo />
-          <h1 className="text-xl font-bold text-foreground tracking-wide font-audiowide">One Click Documentation</h1>
+          <h1 className="text-xl font-bold text-foreground tracking-wide font-audiowide">
+            One Click Documentation
+          </h1>
         </div>
         
-        {onSearchChange && (
-          <div className="relative flex-1 max-w-md mx-8">
-            <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-            <Input
-              className="pl-10 bg-input border-border text-foreground placeholder:text-muted-foreground"
-              placeholder="Search panels, videos, or documentation..."
-              value={searchQuery}
-              onChange={(e) => onSearchChange(e.target.value)}
-            />
-          </div>
-        )}
+        <div className="relative flex-1 max-w-md mx-8">
+          <Input
+            placeholder="Search panels, videos, or documentation..."
+            value={searchQuery}
+            onChange={(e) => onSearchChange?.(e.target.value)}
+            className="pl-10"
+          />
+          <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+        </div>
 
-        {onToggleView && (
-          <div className="flex items-center space-x-2">
-            <Button 
-              variant="outline"
-              size="sm"
-              onClick={onToggleView}
-              className="flex items-center space-x-2"
-            >
-              {showVideoGrid ? <FileText className="w-4 h-4" /> : <Video className="w-4 h-4" />}
-              <span>{showVideoGrid ? 'List View' : 'Grid View'}</span>
-            </Button>
-          </div>
-        )}
+        <div className="flex items-center space-x-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onToggleView}
+          >
+            {showVideoGrid ? <FileText className="w-4 h-4" /> : <Video className="w-4 h-4" />}
+            <span className="ml-2">
+              {showVideoGrid ? 'Documentation' : 'Video Grid'}
+            </span>
+          </Button>
+        </div>
       </div>
     </header>
   )
