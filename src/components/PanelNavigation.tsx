@@ -4,7 +4,6 @@ import {
   Ruler, 
   Heart,
   ArrowRight,
-  DotsSixVertical,
   Toolbox,
   GridFour,
   CaretLeft,

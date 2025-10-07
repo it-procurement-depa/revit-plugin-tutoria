@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { 
   Play, 
   ArrowSquareOut, 
@@ -335,8 +334,6 @@ const panelDetails: Record<string, PanelInfo> = {
 }
 
 export function PanelDetail({ panelId, onPanelSelect }: PanelDetailProps) {
-  const [showFullDescription, setShowFullDescription] = useState(false)
-  
   // Show all panels overview if 'all' is selected
   if (panelId === 'all') {
     return (
@@ -474,11 +471,7 @@ export function PanelDetail({ panelId, onPanelSelect }: PanelDetailProps) {
               return (
                 <Card 
                   key={tool.id} 
-                  className="hover:shadow-lg transition-all duration-200 relative cursor-pointer hover:scale-[1.02]"
-                  onClick={() => {
-                    // For upcoming tools, we can show a toast or message
-                    console.log(`${tool.name} is ${tool.status} - Expected: ${tool.estimatedRelease}`)
-                  }}
+                  className="hover:shadow-lg transition-all duration-200 relative"
                 >
                   <CardHeader>
                     <div className="flex items-start justify-between">

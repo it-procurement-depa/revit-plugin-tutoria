@@ -10,7 +10,6 @@ const projectRoot = process.env.PROJECT_ROOT || import.meta.dirname
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/revit-plugin-tutoria/',
   plugins: [
     react(),
     tailwindcss(),
@@ -23,13 +22,4 @@ export default defineConfig({
       '@': resolve(projectRoot, 'src')
     }
   },
-  build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
-    rollupOptions: {
-      output: {
-        manualChunks: undefined
-      }
-    }
-  }
 });
