@@ -178,10 +178,6 @@ export function PanelNavigation({ selectedPanel, onPanelSelect }: PanelNavigatio
               </div>
             </>
           ) : (
-            <h2 className="text-lg font-semibold text-foreground mb-4">Documentation</h2>
-          )}
-          
-          {!isCollapsed && (
             <div className="mb-6">
               <h2 className="text-lg font-semibold text-foreground mb-1">Documentation</h2>
               <p className="text-xs text-muted-foreground">Navigate through plugin panels</p>
