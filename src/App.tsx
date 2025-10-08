@@ -3,14 +3,6 @@ import { Header } from '@/components/Header'
 import { PanelNavigation } from '@/components/PanelNavigation'
 import { PanelDetail } from '@/components/PanelDetail'
 
-export interface Panel {
-  id: string
-  name: string
-  icon: string
-  description: string
-  videoCount: number
-}
-
 function App() {
   const [selectedPanel, setSelectedPanel] = useState<string>('all')
 

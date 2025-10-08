@@ -14,7 +14,7 @@ import {
   NumberTwo
 } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
-import { Panel } from '@/App'
+import { Panel } from '@/types'
 
 const panels: Panel[] = [
   {

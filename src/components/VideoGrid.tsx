@@ -16,7 +16,7 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
-import { Video } from '@/App'
+import { Video } from '@/types'
 
 interface VideoGridProps {
   selectedPanel: string

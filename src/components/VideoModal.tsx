@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { Video } from '@/App'
+import { Video } from '@/types'
 import { cn } from '@/lib/utils'
 
 // Video data (should ideally be in a shared data file)
