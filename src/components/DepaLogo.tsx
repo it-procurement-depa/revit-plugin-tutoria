@@ -1,11 +1,11 @@
 interface DepaLogoProps {
-}
+  className?: string;
 }
 
-        <span className="text-primary-foreground font-bold te
-      <spa
-        style={{ fontSize: '21px' }}
-        depa
+export function DepaLogo({ className = "" }: DepaLogoProps) {
+  return (
+    <div className={`flex items-center gap-2 ${className}`}>
+      <div className="flex items-center justify-center w-8 h-8 bg-primary rounded-lg">
         <span className="text-primary-foreground font-bold text-sm">D</span>
       </div>
       <span
@@ -14,5 +14,6 @@ interface DepaLogoProps {
       >
         depa
       </span>
-
+    </div>
   );
+}
