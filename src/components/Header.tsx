@@ -21,9 +21,7 @@ export function Header({
       <div className="flex items-center justify-between max-w-full">
         <div className="flex items-center space-x-4">
           <DepaLogo />
-          <h1 className="text-xl font-bold text-foreground tracking-wide font-audiowide">
-            One Click Documentation
-          </h1>
+          <h1 className="text-xl font-bold text-foreground tracking-wide font-audiowide">One Click Documentation</h1>
         </div>
         
         <div className="relative flex-1 max-w-md mx-8">
@@ -50,5 +48,5 @@ export function Header({
         </div>
       </div>
     </header>
-  )
+  );
 }
